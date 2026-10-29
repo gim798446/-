@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Run World</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, "Malgun Gothic", sans-serif;
+      background-color: #fff5df;
+      color: #573b32;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* 왼쪽 메뉴 */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 125px;
+      height: 100vh;
+      background-color: #fffdf7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 35px 10px;
+      z-index: 10;
+      border-right: 1px solid #f1e5d3;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 65px;
+    }
+
+    .logo .cookie {
+      font-size: 45px;
+    }
+
+    .logo h2 {
+      font-size: 15px;
+      color: #a84c36;
+      margin-top: 8px;
+    }
+
+    .logo p {
+      font-size: 10px;
+      color: #d49a4b;
+      letter-spacing: 2px;
+    }
+
+    nav {
+      width: 100%;
+    }
+
+    nav a {
+      display: block;
+      padding: 12px 5px;
+      font-weight: bold;
+      font-size: 12px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #e76b56;
+      transform: translateX(5px);
+    }
+
+    .sns {
+      margin-top: auto;
+      font-size: 11px;
+      line-height: 2;
+    }
+
+    /* 메인 영역 */
+    main {
+      margin-left: 125px;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 28px;
+      background: #513c37;
+      color: white;
+      padding: 5px 15px;
+      font-size: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-rows: 160px;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
+      animation: appear 0.8s ease both;
+    }
+
+    .card:nth-child(2) { animation-delay: 0.1s; }
+    .card:nth-child(3) { animation-delay: 0.2s; }
+    .card:nth-child(4) { animation-delay: 0.3s; }
+
+    .card:hover .art {
+      transform: scale(1.08);
+    }
+
+    .art {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 95px;
+      transition: transform 0.5s;
+    }
+
+    .hero {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .hero .art {
+      background: linear-gradient(140deg, #ffe6a7, #f6a6a6, #c5dfff);
+      font-size: 150px;
+    }
+
+    .hero-title {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      color: white;
+      font-size: clamp(35px, 7vw, 85px);
+      font-weight: 900;
+      text-shadow: 2px 4px 8px #704b4b80;
+      letter-spacing: -3px;
+    }
+
+    .text-card {
+      background-color: #fffdf7;
+      padding: 25px 18px;
+    }
+
+    .text-card h2 {
+      font-size: 21px;
+      margin-bottom: 10px;
+    }
+
+    .text-card p {
+      font-size: 11px;
+      line-height: 1.8;
+      color: #90776b;
+    }
+
+    .pink { background-color: #ffd9e0; }
+    .blue { background-color: #bfeaf5; }
+    .yellow { background-color: #ffe6a1; }
+    .mint { background-color: #c8ead5; }
+    .purple { background-color: #e2d5ff; }
+    .orange { background-color: #ffd0a1; }
+
+    .big-text {
+      grid-column: span 2;
+    }
+
+    .big-text h2 {
+      font-size: 26px;
+    }
+
+    .label {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background-color: #a84c36;
+      color: white;
+      font-size: 11px;
+    }
+
+    .label:hover {
+      background-color: #e76b56;
+    }
+
+    .bottom {
+      padding: 25px;
+      text-align: center;
+      font-size: 11px;
+      color: #9c8172;
+      background: #fffdf7;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 태블릿 */
+    @media (max-width: 1100px) {
+      header {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 12px 20px;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .logo {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .logo .cookie {
+        font-size: 30px;
+      }
+
+      .logo h2 {
+        font-size: 13px;
+        margin: 0;
+      }
+
+      .logo p, .sns {
+        display: none;
+      }
+
+      nav {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        width: auto;
+      }
+
+      nav a {
+        padding: 10px;
+      }
+
+      main {
+        margin-left: 0;
+      }
+
+      .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-auto-rows: 180px;
+      }
+
+      .hero {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+    }
+
+    /* 모바일 */
+    @media (max-width: 650px) {
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      nav a {
+        padding: 7px 9px;
+        font-size: 11px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: 155px;
+      }
+
+      .hero {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      .hero .art {
+        font-size: 110px;
+      }
+
+      .hero-title {
+        font-size: 43px;
+      }
+
+      .text-card {
+        padding: 18px 12px;
+      }
+
+      .text-card h2 {
+        font-size: 17px;
+      }
+
+      .text-card p {
+        font-size: 10px;
+      }
+
+      .art {
+        font-size: 65px;
+      }
+
+      .big-text {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .grid {
+        grid-auto-rows: 135px;
+      }
+
+      .hero-title {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 왼쪽 메뉴 -->
+  <header>
+    <div class="logo">
+      <div class="cookie">🍪</div>
+      <div>
+        <h2>COOKIE RUN</h2>
+        <p>WORLD OF COOKIES</p>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#home">HOME</a>
+      <a href="#cookies">쿠키 소개</a>
+      <a href="#kingdom">쿠키 왕국</a>
+      <a href="#treasure">보물 도감</a>
+      <a href="#adventure">모험 이야기</a>
+    </nav>
+
+    <div class="sns">
+      COOKIE RUN<br>
+      SWEET ADVENTURE!
+    </div>
+  </header>
+
+  <!-- 메인 콘텐츠 -->
+  <main>
+    <div class="topbar">
+      <span>Welcome to Cookie Run World!</span>
+      <span>Sweet Adventure ★</span>
+    </div>
+
+    <section class="grid" id="home">
+
+      <!-- 대표 이미지 -->
+      <article class="card hero">
+        <div class="art">🍪</div>
+        <div class="hero-title">COOKIE RUN</div>
+      </article>
+
+      <!-- 소개 -->
+      <article class="card text-card">
+        <h2>A Sweet New World</h2>
+        <p>
+          달콤한 쿠키들의 세계에 오신 것을 환영합니다.<br>
+          지금 신나는 모험을 시작해 보세요!
+        </p>
+      </article>
+
+      <!-- 왕국 이미지 -->
+      <article class="card">
+        <div class="art blue">🏰</div>
+      </article>
+
+      <!-- 쿠키 소개 -->
+      <article class="card text-card pink" id="cookies">
+        <h2>쿠키 도감</h2>
+        <p>
+          다양한 능력과 매력을 가진<br>
+          쿠키 친구들을 만나 보세요.
+        </p>
+        <a class="label" href="#adventure">쿠키 만나기</a>
+      </article>
+
+      <!-- 용감한 쿠키 -->
+      <article class="card">
+        <div class="art yellow">🏃🍪</div>
+      </article>
+
+      <!-- 왕국 설명 -->
+      <article class="card text-card big-text" id="kingdom">
+        <h2>Cookie Kingdom</h2>
+        <p>
+          나만의 쿠키 왕국을 만들고 친구들과 함께 모험을 떠나요.
+          귀여운 쿠키들과 함께 새로운 이야기를 만들어 보세요!
+        </p>
+        <a class="label" href="#treasure">왕국 탐험하기</a>
+      </article>
+
+      <!-- 딸기맛 쿠키 -->
+      <article class="card">
+        <div class="art mint">🍓</div>
+      </article>
+
+      <!-- 보물 -->
+      <article class="card text-card" id="treasure">
+        <h2>Treasure</h2>
+        <p>
+          모험에 도움이 되는<br>
+          신비한 보물을 찾아보세요.
+        </p>
+      </article>
+
+      <!-- 모험 이미지 -->
+      <article class="card">
+        <div class="art purple">🌈</div>
+      </article>
+
+      <!-- 모험 안내 -->
+      <article class="card text-card orange big-text" id="adventure">
+        <h2>Let's Go Adventure!</h2>
+        <p>
+          용감한 쿠키와 친구들이 기다리고 있어요.
+          달콤하고 신나는 쿠키런의 세계로 출발!
+        </p>
+        <a class="label" href="#home">처음으로 돌아가기</a>
+      </article>
+
+      <!-- 추가 콘텐츠 -->
+      <article class="card">
+        <div class="art pink">🧁</div>
+      </article>
+
+      <article class="card">
+        <div class="art blue">⭐</div>
+      </article>
+
+    </section>
+
+    <footer class="bottom">
+      COOKIE RUN WORLD · SWEET AND HAPPY ADVENTURE 🍪
+    </footer>
+  </main>
+
+</body>
+</html>
